@@ -1,0 +1,70 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Configurations begin ------------------------------
+
+# Proxy
+http_proxy = 'http://dummy.proxy.com:8080/'
+https_proxy = 'http://dummy.proxy.com:8080/'
+no_proxy = 'localhost,127.0.0.1,192.168.,172.'
+
+# box_url = 'http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box'
+box_url = 'C:\static\boxes\CentOS-6.4-x86_64-v20130731.box'
+
+cookbooks_path = ['./cookbooks', './site-cookbooks']
+
+vms = {
+  'zabbixserver' => {
+    :ipaddress => '192.168.20.11',
+    :forwarded_port => [
+      {guest: 80, host: 8080},
+      # {guest: 443, host: 8081},
+    ],
+    :run_list => [
+      'recipe[zabbix_1000k::server]',
+    ]
+  },
+  'zabbixnode' => {
+    :ipaddress => '192.168.20.21',
+    :run_list => [
+      'recipe[zabbix_1000k::agent]',
+    ]
+  },
+
+}
+
+# Configurations end ------------------------------
+
+Vagrant::configure('2') do |global_config|
+  if Vagrant.has_plugin?('vagrant-proxyconf')
+    global_config.proxy.http     = http_proxy
+    global_config.proxy.https    = https_proxy
+    global_config.proxy.no_proxy = no_proxy
+  end
+
+  vms.each_pair do |host, opts|
+    global_config.vm.define host do |config|
+      config.vm.box = host
+      config.vm.box_url = box_url
+      config.vm.hostname = host
+      # config.vm.provider :virtualbox do |vb| 
+      #   vb.customize ["modifyvm", :id, "--memory", 1024]
+      # end
+
+      config.vm.network :private_network, ip: opts[:ipaddress]
+      if !(opts[:forwarded_port].nil?)
+        opts[:forwarded_port].each do |conf|
+          config.vm.network :forwarded_port, guest: conf[:guest], host: conf[:host]
+        end
+      end
+
+      ## Installs up-to-date Chef Client.
+      # config.vm.provision 'shell', inline: 'curl -L https://www.opscode.com/chef/install.sh | bash'
+
+      config.vm.provision :chef_solo do |chef|
+        chef.cookbooks_path = cookbooks_path
+        chef.run_list = [opts[:run_list]]
+      end
+    end
+  end
+end

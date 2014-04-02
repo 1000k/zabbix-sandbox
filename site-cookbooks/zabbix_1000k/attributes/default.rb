@@ -1,0 +1,1 @@
+default['zabbix_1000k']['zabbix_server_mysql_version'] = '2.2.2'
