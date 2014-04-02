@@ -12,7 +12,7 @@ Attributes
 Usage
 -----
 ### zabbix_1000k::default
-Same as `zabbix_1000k::agent`.
+Setup repositories and installs zabbix-agent.
 
 ### zabbix_1000k::agent
 Installs zabbix-agent.

@@ -10,7 +10,7 @@ Requirements
 Usage
 -----
 ### Configure Vagrantfile
-1. `git submodule init`
+1. `git submodule update --init`
 1. `mv Vagrantfile.sample Vagrantfile`
 1. (option: if you use proxy) Install 'vagrant-proxyconf' plugin via `$ vagrant plugin install vagrant-proxyconf`.
 1. Fill the configurations in 'Vagrantfile'.
