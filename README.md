@@ -14,9 +14,9 @@ Usage
 1. `mv Vagrantfile.sample Vagrantfile`
 1. (option: if you use proxy) Install 'vagrant-proxyconf' plugin via `$ vagrant plugin install vagrant-proxyconf`.
 1. Fill the configurations in 'Vagrantfile'.
-  - Vagrant box should be RHEL or CentOS.
+  - OS type should be CentOS >= 6.
 1. Type `vagrant up`.
-1. `zabbixserver` and `zabbixnode` VM will be created.
+1. After a while, `zabbixserver` and `zabbixnode` VM will be created.
 
 ### Setup Zabbix Server
 1. Access to `http://localhost:8080/zabbix/`. (default)
@@ -27,7 +27,7 @@ Usage
   - Password: `zabbix`
 
 ### Add Node to Server
-1. Edit server ip address in `/etc/zabbix/zabbix_agentd.conf` on zabbix node server.
+1. Open `/etc/zabbix/zabbix_agentd.conf` on zabbix node server and edit Zabbix server's ip address.
 1. Register the node via Zabbix Server web-interface.
   - Detailed instruction: [Installing the Zabbix Agent on a Linux Server [Zabbix]](https://www.zabbix.com/wiki/howto/monitor/os/linux/agentinstallonlinux)
 
