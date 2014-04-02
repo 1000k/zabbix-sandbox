@@ -22,11 +22,11 @@ Usage
 1. Access to `http://localhost:8080/zabbix/`. (default)
   - If you changed `forwarded_port` in Vagrantfile, change port from 8080.
 1. Click 'Next' several times.
-1. Login control panel with the following credentials:
+1. Login control panel.
   - Login name: `admin`
   - Password: `zabbix`
 
-### Connect Node to Server
+### Add Node to Server
 1. Edit server ip address in `/etc/zabbix/zabbix_agentd.conf` on zabbix node server.
 1. Register the node via Zabbix Server web-interface.
   - Detailed instruction: [Installing the Zabbix Agent on a Linux Server [Zabbix]](https://www.zabbix.com/wiki/howto/monitor/os/linux/agentinstallonlinux)
